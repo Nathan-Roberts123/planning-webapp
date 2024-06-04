@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import FormWrapper from "../components/wrapper";
+import FormWrapper from "../components/form-wrapper";
 import SignupForm from "./components/signup-form";
 
 const Signup = () => {
