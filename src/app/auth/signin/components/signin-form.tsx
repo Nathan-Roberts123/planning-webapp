@@ -2,7 +2,7 @@
 import BaseForm from "../../components/base-form";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { InputText } from "primereact/inputtext";
+import { TSignupFormState } from "@/lib/types";
 
 const SigninForm = () => {
   const [showMessage, setShowMessage] = useState(false);
@@ -11,15 +11,13 @@ const SigninForm = () => {
   const defaultValues = {
     email: "",
     password: "",
-    confirm_password: "",
   };
 
   const {
     control,
     formState: { errors },
     handleSubmit,
-    reset,
-  } = useForm({ defaultValues });
+  } = useForm<TSignupFormState>({ defaultValues });
 
   return <BaseForm control={control} errors={errors} />;
 };

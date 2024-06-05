@@ -4,27 +4,22 @@ import BaseForm from "../../components/base-form";
 import { useForm, Controller } from "react-hook-form";
 import { classNames } from "primereact/utils";
 import { Password } from "primereact/password";
+import { TSignupFormState } from "@/lib/types";
 
 const SignupForm = () => {
   const [showMessage, setShowMessage] = useState(false);
   const [formData, setFormData] = useState({});
 
   const defaultValues = {
-    name: "",
     email: "",
     password: "",
     confirm_password: "",
-    date: null,
-    country: null,
-    accept: false,
   };
 
   const {
     control,
     formState: { errors },
-    handleSubmit,
-    reset,
-  } = useForm({ defaultValues });
+  } = useForm<TSignupFormState>();
   return (
     <BaseForm control={control} errors={errors}>
       <div className="field">

@@ -4,6 +4,7 @@ import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import { Password } from "primereact/password";
 import { classNames } from "primereact/utils";
+import { TSigninFormState, TSignupFormState } from "@/lib/types";
 
 const BaseForm = ({
   children,
@@ -11,8 +12,8 @@ const BaseForm = ({
   errors,
 }: {
   children?: React.ReactNode;
-  control: Control<any>;
-  errors: FieldErrors<any>;
+  control: Control<TSignupFormState>;
+  errors: FieldErrors<TSigninFormState | TSignupFormState>;
 }) => {
   return (
     <form className="p-fluid">
