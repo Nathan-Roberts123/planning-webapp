@@ -1,7 +1,9 @@
+"use client";
 import React from "react";
 import { Card } from "primereact/card";
 import Link from "next/link";
 import { Button } from "primereact/button";
+import { signIn } from "next-auth/react";
 
 const FormWrapper = ({
   children,
@@ -20,11 +22,13 @@ const FormWrapper = ({
                 className="w-full py-2 mb-2"
                 label="Google"
                 icon="pi pi-google"
+                onClick={() => signIn("google", { callbackUrl: "/boards" })}
               />
               <Button
                 className="w-full py-2 mb-2 p-button-secondary"
                 label="Github"
                 icon="pi pi-github"
+                onClick={() => signIn("github", { callbackUrl: "/boards" })}
               />
             </div>
             <h5 className="text-center mt-2">

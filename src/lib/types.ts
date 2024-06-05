@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { string, z } from "zod";
 
 export const ZSignupFormState = z.object({
   email: z.string().trim().min(1).email(),
@@ -11,3 +11,10 @@ export const ZSigninFormState = ZSignupFormState.omit({
   confirm_password: true,
 });
 export type TSigninFormState = z.infer<typeof ZSigninFormState>;
+
+export type TBoard = {
+  id: string;
+  name: string;
+};
+
+export type TWorkspace = { board: { name: string } };

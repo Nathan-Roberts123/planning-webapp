@@ -8,6 +8,11 @@ export const env = createEnv({
     GITHUB_SECRET: z.string().min(2),
     GOOGLE_CLIENT_ID: z.string().min(2),
     GOOGLE_CLIENT_SECRET: z.string().min(2),
+    NEXTAUTH_SECRET: z.string().min(2),
+    NEXTAUTH_URL:
+      process.env.NODE_ENV === "production"
+        ? z.string().min(2)
+        : z.string().min(2).optional(),
   },
   client: {},
 
@@ -17,5 +22,7 @@ export const env = createEnv({
     GITHUB_SECRET: process.env.GITHUB_SECRET,
     GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
     GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
+    NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
+    NEXTAUTH_URL: process.env.NEXTAUTH_URL,
   },
 });

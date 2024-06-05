@@ -52,10 +52,15 @@ export const authOptions: AuthOptions = {
   ],
   callbacks: {
     async session({ session, user, token }) {
+      if (session.user) {
+        session.user.id = token.userId;
+      }
       return session;
     },
     async jwt({ token, user, account, profile, isNewUser }) {
-      console.log({ token, user, account, profile, isNewUser });
+      if (user) {
+        token.userId = user.id;
+      }
       return token;
     },
   },
