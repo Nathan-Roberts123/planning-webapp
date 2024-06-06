@@ -33,10 +33,12 @@ const Boards = async () => {
         );
       })}
 
-      <div className="w-[317px]">
-        <div className="mb-3">Add New Group</div>
-        <NewGroupButton />
-      </div>
+      {workspace && (
+        <div className="w-[317px]">
+          <div className="mb-3">Add New Group</div>
+          <NewGroupButton />
+        </div>
+      )}
     </div>
   );
 };
