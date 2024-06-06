@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import SessionProdiver from "@/components/providers/SessionProdiver";
+import SessionProdiver from "@/components/providers/session-prodiver";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/authOptions";
-import "./globals.css";
 import "primereact/resources/themes/lara-light-indigo/theme.css"; //theme
 import "primereact/resources/primereact.min.css"; //core css
 import "primeicons/primeicons.css"; //icons
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Create Next App",

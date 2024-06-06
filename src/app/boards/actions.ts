@@ -41,7 +41,7 @@ export const updateWorkspace = async (boardId: string) => {
   const session = await getServerSession(authOptions);
 
   if (session) {
-    const workspace = await prisma.workspace.update({
+    await prisma.workspace.update({
       where: {
         userId: session.user.id,
       },
@@ -52,4 +52,64 @@ export const updateWorkspace = async (boardId: string) => {
 
     revalidatePath("/boards");
   }
+};
+
+export const createGroup = async (prevState: TState, data: FormData) => {
+  const name = data.get("group_name") as string;
+  const session = await getServerSession(authOptions);
+
+  if (!name.length) {
+    return { status: "failed" };
+  }
+
+  if (session) {
+    const workspace = await prisma.workspace.findUnique({
+      where: {
+        userId: session.user.id,
+      },
+    });
+
+    if (workspace) {
+      await prisma.group.create({
+        data: {
+          name,
+          boardId: workspace.boardId,
+        },
+      });
+    }
+    revalidatePath("/boards");
+
+    return { status: "success" };
+  }
+
+  return { status: "failed" };
+};
+
+type TCreateCardState = {
+  status: string;
+  groupId?: string;
+};
+
+export const createCard = async (
+  prevState: TCreateCardState,
+  data: FormData
+) => {
+  const title = data.get("title") as string;
+  const description = data.get("description") as string;
+  const groupId = prevState.groupId;
+
+  if (!title.length || !groupId) {
+    return { status: "failed" };
+  }
+
+  await prisma.groupCard.create({
+    data: {
+      title,
+      comment: description,
+      groupId,
+    },
+  });
+
+  revalidatePath("/boards");
+  return { status: "success", groupId: "" };
 };

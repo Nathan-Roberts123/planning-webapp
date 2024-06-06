@@ -9,6 +9,7 @@ import { useRef } from "react";
 import { createBoard, updateWorkspace } from "../actions";
 import { useFormState } from "react-dom";
 import { TBoard, TWorkspace } from "@/lib/types";
+import Modal from "./modal";
 
 const Navbar = ({
   boards,
@@ -59,47 +60,23 @@ const Navbar = ({
     },
   ];
 
-  const renderFooter = () => {
-    return (
-      <div>
-        <Button
-          label="Cancel"
-          icon="pi pi-times"
-          onClick={() => handleHide()}
-          className="p-button-text"
-        />
-        <Button
-          label="Create"
-          icon="pi pi-check"
-          onClick={() => {
-            if (formRef.current) {
-              formRef.current.requestSubmit();
-            }
-          }}
-          autoFocus
-          type="submit"
-        />
-      </div>
-    );
-  };
-
   return (
     <>
-      <Dialog
-        className="w-48"
+      <Modal
+        header="Create A New Board"
         visible={visible}
         onHide={handleHide}
-        breakpoints={{ "960px": "75vw", "640px": "100vw" }}
-        style={{ width: "50vw" }}
-        header="Create A New Board"
-        footer={renderFooter()}
-        draggable={false}
+        onSave={() => {
+          if (formRef.current) {
+            formRef.current.requestSubmit();
+          }
+        }}
       >
         <h5 className="font-bold mb-2">Board Name</h5>
         <form ref={formRef} action={formAction}>
           <InputText className="w-full" name="board_name" />
         </form>
-      </Dialog>
+      </Modal>
 
       <Menubar
         model={items}
