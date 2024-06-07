@@ -10,32 +10,36 @@ const BaseForm = ({
   children,
   control,
   errors,
+  action,
+  onSubmit,
 }: {
+  onSubmit?: () => void;
   children?: React.ReactNode;
   control: Control<TSignupFormState>;
-  errors: FieldErrors<TSignupFormState>;
+  errors: FieldErrors<TSignupFormState> | null;
+  action?: (payload: FormData) => void;
 }) => {
   return (
-    <form className="p-fluid">
+    <form action={action} onSubmit={onSubmit} className="p-fluid">
       <div className="field">
         <span className="p-float-label p-input-icon-right">
           <i className="pi pi-envelope" />
           <Controller
             name="email"
             control={control}
-            render={({ field, fieldState }) => (
+            render={({ field }) => (
               <InputText
                 id={field.name}
                 {...field}
                 className={classNames({
-                  "p-invalid": fieldState.invalid,
+                  "p-invalid": errors?.email,
                 })}
               />
             )}
           />
           <label
             htmlFor="email"
-            className={classNames({ "p-error": !!errors.email })}
+            className={classNames({ "p-error": !!errors?.email })}
           >
             Email*
           </label>
@@ -46,20 +50,20 @@ const BaseForm = ({
           <Controller
             name="password"
             control={control}
-            render={({ field, fieldState }) => (
+            render={({ field }) => (
               <Password
                 id={field.name}
                 {...field}
                 feedback={false}
                 className={classNames({
-                  "p-invalid": fieldState.invalid,
+                  "p-invalid": errors?.password,
                 })}
               />
             )}
           />
           <label
             htmlFor="password"
-            className={classNames({ "p-error": errors.password })}
+            className={classNames({ "p-error": errors?.password })}
           >
             Password*
           </label>

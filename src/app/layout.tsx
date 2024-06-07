@@ -6,6 +6,7 @@ import "primereact/resources/themes/lara-light-indigo/theme.css"; //theme
 import "primereact/resources/primereact.min.css"; //core css
 import "primeicons/primeicons.css"; //icons
 import "./globals.css";
+import ToastProvider from "@/components/providers/toast-provider";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -21,7 +22,9 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className="h-screen">
-        <SessionProdiver session={session}>{children}</SessionProdiver>
+        <SessionProdiver session={session}>
+          <ToastProvider>{children}</ToastProvider>
+        </SessionProdiver>
       </body>
     </html>
   );

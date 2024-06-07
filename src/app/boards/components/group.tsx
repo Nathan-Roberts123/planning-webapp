@@ -1,7 +1,6 @@
 import React from "react";
-import GroupCard from "./group-card";
-import NewCardButton from "./new-card-button";
 import prisma from "@/lib/db";
+import SortableGroupItem from "./sortable-group-item";
 
 type GroupProps = {
   id: string;
@@ -14,19 +13,7 @@ const Group = async ({ id, name }: GroupProps) => {
       groupId: id,
     },
   });
-  return (
-    <div className="w-full">
-      <div className="mb-3">{name}</div>
-      {cards.map((card) => {
-        return (
-          <div key={card.id} className="mb-4">
-            <GroupCard title={card.title} description={card.comment} />
-          </div>
-        );
-      })}
-      <NewCardButton groupId={id} />
-    </div>
-  );
+  return <SortableGroupItem cards={cards} id={id} name={name} />;
 };
 
 export default Group;

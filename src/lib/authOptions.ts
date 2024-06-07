@@ -6,6 +6,7 @@ import GitHubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 import { env } from "@/env";
 import CredentialsProvider from "next-auth/providers/credentials";
+import bcrypt from "bcryptjs";
 
 export const authOptions: AuthOptions = {
   session: { strategy: "jwt" },
@@ -27,7 +28,7 @@ export const authOptions: AuthOptions = {
       // e.g. domain, username, password, 2FA token, etc.
       // You can pass any HTML attribute to the <input> tag through the object.
       credentials: {
-        username: {
+        email: {
           label: "Email",
           type: "text",
           placeholder: "name@domain.com",
@@ -36,7 +37,28 @@ export const authOptions: AuthOptions = {
       },
       async authorize(credentials, req) {
         // Add logic here to look up the user from the credentials supplied
-        const user = { id: "2", name: "J Smith", email: "jsmith@example.com" };
+        const dbUser = await prisma.user.findUnique({
+          where: { email: credentials?.email },
+        });
+
+        if (!dbUser) {
+          throw new Error("user not found");
+        }
+
+        if (!credentials?.password || !dbUser.password) {
+          throw new Error("Error while loging in a user");
+        }
+
+        const match = bcrypt.compareSync(
+          credentials?.password,
+          dbUser.password
+        );
+
+        if (!match) {
+          throw new Error("Error while loging in a user");
+        }
+
+        const user = { id: dbUser.id, email: dbUser.email };
 
         if (user) {
           // Any object returned will be saved in `user` property of the JWT
