@@ -92,7 +92,7 @@ type TCreateCardState = {
 
 export const createCard = async (
   prevState: TCreateCardState,
-  data: FormData
+  data: FormData,
 ) => {
   const title = data.get("title") as string;
   const description = data.get("description") as string;
@@ -111,5 +111,5 @@ export const createCard = async (
   });
 
   revalidatePath("/boards");
-  return { status: "success", groupId: "" };
+  return { status: "success", groupId };
 };
