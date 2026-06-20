@@ -36,7 +36,7 @@ const Navbar = ({
       label: board.name,
       command: async () => {
         await updateWorkspace(board.id);
-        window.location.reload();
+        window.location.reload(); // reload the page to update the board id imediantly
       },
     };
   });
